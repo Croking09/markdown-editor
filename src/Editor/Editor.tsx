@@ -1,9 +1,13 @@
 import { useState, useRef } from 'react'
 import Markdown from 'react-markdown'
 
-import { placeholderMsg } from '../constants'
+import { PLACEHOLDER_MSG } from '../constants'
 
-function Editor({ className } : { className?: string }) {
+type EditorProps = {
+  className?: string
+}
+
+function Editor({ className }: EditorProps) {
   const [text, setText] = useState('')
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const previewRef = useRef<HTMLDivElement>(null)
@@ -24,7 +28,7 @@ function Editor({ className } : { className?: string }) {
         value={text}
         onChange={(e) => setText(e.target.value)}
         onScroll={syncScroll}
-        placeholder={placeholderMsg}
+        placeholder={PLACEHOLDER_MSG}
         wrap='off'
       />
 
