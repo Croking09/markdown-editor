@@ -1,1 +1,1 @@
-export const placeholderMsg = 'Write markdown here...'
+export const PLACEHOLDER_MSG = 'Write markdown here...'
