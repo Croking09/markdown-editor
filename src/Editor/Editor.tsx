@@ -21,22 +21,26 @@ function Editor({ className }: EditorProps) {
 
   return (
     <div className={'flex w-full' + ` ${className}`}>
-      <textarea
-        className="w-1/2 p-2 border-r resize-none font-roboto-mono focus:outline-none overflow-x-scroll"
-        ref={textareaRef}
-        id="input"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        onScroll={syncScroll}
-        placeholder={PLACEHOLDER_MSG}
-        wrap='off'
-      />
+      <div className="w-1/2 px-2 pt-2 border-r">
+        <textarea
+          className="w-full h-full resize-none font-roboto-mono focus:outline-none overflow-auto"
+          ref={textareaRef}
+          id="input"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          onScroll={syncScroll}
+          placeholder={PLACEHOLDER_MSG}
+          wrap='off'
+        />
+      </div>
 
-      <div 
-        className={"w-1/2 p-2 resize-none" + " prose max-w-none select-none overflow-x-scroll whitespace-pre"}
-        ref={previewRef}
-      >
-        <Markdown>{text}</Markdown>
+      <div className="w-1/2 px-2 pt-2">
+        <div 
+          className={"w-full h-full" + " prose max-w-none select-none overflow-auto whitespace-pre"}
+          ref={previewRef}
+        >
+          <Markdown>{text}</Markdown>
+        </div>
       </div>
     </div>
   )
