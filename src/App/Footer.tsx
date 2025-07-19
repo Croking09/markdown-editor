@@ -1,6 +1,10 @@
+import useDarkMode from '../hooks/useDarkMode'
+
 import { github } from '../data'
 
 function Footer() {
+  const { isDark } = useDarkMode()
+
   return (
     <div>
       <hr />
@@ -8,7 +12,7 @@ function Footer() {
       <div className="flex items-center justify-between p-2">
         <a href={github.url} target="_blank" rel="noopener noreferrer">
           <img
-            className="w-8 h-8"
+            className={`w-8 h-8 ${github.name === 'GitHub' && isDark ? 'bg-white rounded-full' : ''}`}
             src={github.logo}
             alt={github.name}
           />

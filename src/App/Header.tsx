@@ -1,20 +1,10 @@
-import { useCallback, useEffect, useState } from 'react'
+import useDarkMode from '../hooks/useDarkMode.ts'
+
 import darkModeIcon from '../assets/dark-mode.svg'
 import lightModeIcon from '../assets/light-mode.svg'
 
 function Header() {
-  const [isDark, setIsDark] = useState(() =>
-    document.documentElement.classList.contains('dark')
-  )
-
-  const toggleDarkMode = useCallback(() => {
-    document.documentElement.classList.toggle('dark')
-    setIsDark(document.documentElement.classList.contains('dark'))
-  }, [])
-
-  useEffect(() => {
-    setIsDark(document.documentElement.classList.contains('dark'))
-  }, [])
+  const { isDark, toggleDarkMode } = useDarkMode()
 
   return (
     <div>
