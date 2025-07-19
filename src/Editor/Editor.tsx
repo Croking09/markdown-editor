@@ -1,5 +1,7 @@
-import { useState, useRef, useCallback } from 'react'
+import { useRef, useCallback } from 'react'
 import Markdown from 'react-markdown'
+
+import { useText } from '../hooks/useText'
 
 import { PLACEHOLDER_MSG } from '../constants'
 
@@ -8,7 +10,7 @@ type EditorProps = {
 }
 
 function Editor({ className }: EditorProps) {
-  const [text, setText] = useState('')
+  const {text, setText} = useText()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const previewRef = useRef<HTMLDivElement>(null)
 
