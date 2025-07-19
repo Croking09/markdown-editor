@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import Markdown from 'react-markdown'
 
 import { PLACEHOLDER_MSG } from '../constants'
@@ -12,12 +12,26 @@ function Editor({ className }: EditorProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const previewRef = useRef<HTMLDivElement>(null)
 
-  const syncScroll = () => {
-    if (textareaRef.current && previewRef.current) {
-      previewRef.current.scrollTop = textareaRef.current.scrollTop
-      previewRef.current.scrollLeft = textareaRef.current.scrollLeft
+  const isSyncing = useRef(false)
+
+  const syncScroll = useCallback((
+    originRef: React.RefObject<HTMLTextAreaElement | HTMLDivElement | null>,
+    targetRef: React.RefObject<HTMLTextAreaElement | HTMLDivElement | null>
+  ) => {
+    if (isSyncing.current) return
+    if (originRef.current && targetRef.current) {
+      isSyncing.current = true
+      const origin = originRef.current
+      const target = targetRef.current
+
+      const scrollTopPercent = origin.scrollTop / (origin.scrollHeight - origin.clientHeight || 1)
+      const scrollLeftPercent = origin.scrollLeft / (origin.scrollWidth - origin.clientWidth || 1)
+
+      target.scrollTop = scrollTopPercent * (target.scrollHeight - target.clientHeight)
+      target.scrollLeft = scrollLeftPercent * (target.scrollWidth - target.clientWidth)
+      setTimeout(() => { isSyncing.current = false }, 0)
     }
-  }
+  }, [])
 
   return (
     <div className={'flex w-full' + ` ${className}`}>
@@ -28,7 +42,7 @@ function Editor({ className }: EditorProps) {
           id="input"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          onScroll={syncScroll}
+          onScroll={() => syncScroll(textareaRef, previewRef)}
           placeholder={PLACEHOLDER_MSG}
           wrap='off'
         />
@@ -38,6 +52,7 @@ function Editor({ className }: EditorProps) {
         <div 
           className={"w-full h-full" + " prose max-w-none select-none overflow-auto whitespace-pre"}
           ref={previewRef}
+          onScroll={() => syncScroll(previewRef, textareaRef)}
         >
           <Markdown>{text}</Markdown>
         </div>
