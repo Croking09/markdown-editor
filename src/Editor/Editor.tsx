@@ -40,9 +40,9 @@ function Editor({ className }: EditorProps) {
       <div className="w-1/2 px-2 pt-2 border-r">
         <textarea
           className="w-full h-full resize-none font-roboto-mono focus:outline-none overflow-auto 
-                    text-black dark:text-zinc-100 
-                    placeholder-zinc-400
-                    bg-white dark:bg-zinc-900 
+                    text-dark-text dark:text-light-text 
+                    placeholder-placeholder
+                    bg-light-bg dark:bg-dark-bg 
                     transition-colors duration-300"
           ref={textareaRef}
           id="input"

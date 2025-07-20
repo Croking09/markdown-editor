@@ -7,6 +7,14 @@
 @theme {
   --font-roboto-mono: 'Roboto Mono', monospace;
   --font-inter: 'Inter', sans-serif;
+
+  --color-light-bg: #f9f9f7;
+  --color-light-text: #f4f4f5;
+
+  --color-dark-bg: #18181b;
+  --color-dark-text: #000000;
+
+  --color-placeholder: #9f9fa9;
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
