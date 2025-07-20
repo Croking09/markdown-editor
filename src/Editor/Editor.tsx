@@ -39,20 +39,24 @@ function Editor({ className }: EditorProps) {
     <div className={'flex w-full' + ` ${className}`}>
       <div className="w-1/2 px-2 pt-2 border-r">
         <textarea
-          className="w-full h-full resize-none font-roboto-mono focus:outline-none overflow-auto"
+          className="w-full h-full resize-none font-roboto-mono focus:outline-none overflow-auto 
+                    text-black dark:text-zinc-100 
+                    placeholder-zinc-400
+                    bg-white dark:bg-zinc-900 
+                    transition-colors duration-300"
           ref={textareaRef}
           id="input"
           value={text}
           onChange={(e) => setText(e.target.value)}
           onScroll={() => syncScroll(textareaRef, previewRef)}
           placeholder={PLACEHOLDER_MSG}
-          wrap='off'
+          wrap="off"
         />
       </div>
 
       <div className="w-1/2 px-2 pt-2">
         <div 
-          className={"w-full h-full" + " prose max-w-none select-none overflow-auto whitespace-pre"}
+          className={"w-full h-full prose dark:prose-invert max-w-none select-none overflow-auto whitespace-pre"}
           ref={previewRef}
           onScroll={() => syncScroll(previewRef, textareaRef)}
         >
