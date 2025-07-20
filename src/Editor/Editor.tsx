@@ -2,7 +2,6 @@ import { useRef, useCallback } from 'react'
 import Markdown from 'react-markdown'
 
 import { useText } from '../hooks/useText'
-
 import { PLACEHOLDER_MSG } from '../constants'
 
 type EditorProps = {
@@ -35,8 +34,27 @@ function Editor({ className }: EditorProps) {
     }
   }, [])
 
+  const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    const file = e.dataTransfer.files[0]
+    if (file && file.name.endsWith('.md')) {
+      const content = await file.text()
+      setText(content)
+    } else {
+      alert('Only .md files are supported.')
+    }
+  }
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+  }
+
   return (
-    <div className={'flex w-full' + ` ${className}`}>
+    <div
+      className={'flex w-full ' + (className || '')}
+      onDrop={handleDrop}
+      onDragOver={handleDragOver}
+    >
       <div className="w-1/2 px-2 pt-2 border-r">
         <textarea
           className="w-full h-full resize-none font-roboto-mono focus:outline-none overflow-auto 
@@ -56,7 +74,7 @@ function Editor({ className }: EditorProps) {
 
       <div className="w-1/2 px-2 pt-2">
         <div 
-          className={"w-full h-full prose dark:prose-invert max-w-none select-none overflow-auto whitespace-pre"}
+          className="w-full h-full prose dark:prose-invert max-w-none select-none overflow-auto whitespace-pre"
           ref={previewRef}
           onScroll={() => syncScroll(previewRef, textareaRef)}
         >
