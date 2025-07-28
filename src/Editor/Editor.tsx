@@ -1,5 +1,7 @@
-import { useRef, useCallback } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import Markdown from 'react-markdown'
+
+import ConfirmModal from '../App/ConfirmModal'
 
 import { useText } from '../hooks/useText'
 import { PLACEHOLDER_MSG } from '../constants'
@@ -10,6 +12,8 @@ type EditorProps = {
 
 function Editor({ className }: EditorProps) {
   const {text, setText} = useText()
+  const [showConfirm, setShowConfirm] = useState(false)
+  const [pendingContent, setPendingContent] = useState('')
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const previewRef = useRef<HTMLDivElement>(null)
 
@@ -36,14 +40,24 @@ function Editor({ className }: EditorProps) {
 
   const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
+
     const file = e.dataTransfer.files[0]
-    if (file && file.name.endsWith('.md')) {
-      const content = await file.text()
-      setText(content)
-    } else {
+    if (!file) return
+
+    if (!file.name.endsWith('.md')) {
       alert('Only .md files are supported.')
+      return
     }
-  }
+
+    const content = await file.text()
+
+    if (text !== '') {
+      setPendingContent(content)
+      setShowConfirm(true)
+    } else {
+      setText(content)
+    }
+  };
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
@@ -91,6 +105,17 @@ function Editor({ className }: EditorProps) {
           </Markdown>
         </div>
       </div>
+
+      <ConfirmModal
+        isOpen={showConfirm}
+        message="Do you want to replace the current content with the new file?"
+        onCancel={() => setShowConfirm(false)}
+        onConfirm={() => {
+          setText(pendingContent)
+          setPendingContent('')
+          setShowConfirm(false)
+        }}
+      />
     </div>
   )
 }

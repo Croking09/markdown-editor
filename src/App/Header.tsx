@@ -1,10 +1,15 @@
+import { useState } from 'react'
 import { useText } from '../hooks/useText.ts'
 import useDarkMode from '../hooks/useDarkMode.ts'
+
+import ConfirmModal from './ConfirmModal.tsx'
 
 import darkModeIcon from '../assets/dark-mode.svg'
 import lightModeIcon from '../assets/light-mode.svg'
 
 function Header() {
+  const [showConfirm, setShowConfirm] = useState(false)
+  const [pendingContent, setPendingContent] = useState('')
   const { isDark, toggleDarkMode } = useDarkMode()
   const { text, setText } = useText()
 
@@ -32,9 +37,14 @@ function Header() {
 
       const reader = new FileReader()
       reader.onload = (e: ProgressEvent<FileReader>) => {
-        const text = e.target?.result
-        if (typeof text === 'string') {
-          setText(text)
+        const textContent = e.target?.result
+        if (typeof textContent === 'string') {
+          if (text !== '') {
+            setPendingContent(textContent)
+            setShowConfirm(true)
+          } else {
+            setText(textContent)
+          }
         }
       }
       reader.readAsText(file)
@@ -73,6 +83,20 @@ function Header() {
       </div>
 
       <hr />
+
+      <ConfirmModal
+        isOpen={showConfirm}
+        message="Do you want to replace the current content with the new file?"
+        onCancel={() => {
+          setPendingContent('')
+          setShowConfirm(false)
+        }}
+        onConfirm={() => {
+          setText(pendingContent)
+          setPendingContent('')
+          setShowConfirm(false)
+        }}
+      />
     </div>
   )
 }
