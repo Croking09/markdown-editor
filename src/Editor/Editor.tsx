@@ -78,7 +78,17 @@ function Editor({ className }: EditorProps) {
           ref={previewRef}
           onScroll={() => syncScroll(previewRef, textareaRef)}
         >
-          <Markdown>{text}</Markdown>
+          <Markdown
+            components={{
+              a: ({...props}) => (
+                <a {...props} target="_blank" rel="noopener noreferrer">
+                  {props.children}
+                </a>
+              )
+            }}
+          >
+            {text}
+          </Markdown>
         </div>
       </div>
     </div>
