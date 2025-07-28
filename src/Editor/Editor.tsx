@@ -57,7 +57,7 @@ function Editor({ className }: EditorProps) {
     >
       <div className="w-1/2 px-2 pt-2 border-r">
         <textarea
-          className="w-full h-full resize-none font-roboto-mono focus:outline-none overflow-auto 
+          className="w-full h-full resize-none font-roboto-mono focus:outline-none overflow-auto whitespace-normal break-words 
                     text-dark-text dark:text-light-text 
                     placeholder-placeholder
                     bg-light-bg dark:bg-dark-bg 
@@ -74,7 +74,7 @@ function Editor({ className }: EditorProps) {
 
       <div className="w-1/2 px-2 pt-2">
         <div 
-          className="w-full h-full prose dark:prose-invert max-w-none select-none overflow-auto whitespace-pre"
+          className="w-full h-full prose dark:prose-invert max-w-none select-none overflow-auto"
           ref={previewRef}
           onScroll={() => syncScroll(previewRef, textareaRef)}
         >
