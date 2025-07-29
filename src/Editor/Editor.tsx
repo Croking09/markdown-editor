@@ -4,6 +4,7 @@ import Markdown from 'react-markdown'
 import ConfirmModal from '../App/ConfirmModal'
 
 import { useText } from '../hooks/useText'
+import { useResizablePanel } from '../hooks/useResizablePanel'
 import { PLACEHOLDER_MSG } from '../constants'
 
 type EditorProps = {
@@ -12,12 +13,15 @@ type EditorProps = {
 
 function Editor({ className }: EditorProps) {
   const {text, setText} = useText()
+
   const [showConfirm, setShowConfirm] = useState(false)
   const [pendingContent, setPendingContent] = useState('')
+
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const previewRef = useRef<HTMLDivElement>(null)
-
   const isSyncing = useRef(false)
+
+  const {panelWidth: editorWidth, startDragging} = useResizablePanel('editor-container')
 
   const syncScroll = useCallback((
     originRef: React.RefObject<HTMLTextAreaElement | HTMLDivElement | null>,
@@ -65,11 +69,15 @@ function Editor({ className }: EditorProps) {
 
   return (
     <div
+      id="editor-container"
       className={'flex w-full ' + (className || '')}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
     >
-      <div className="w-1/2 px-2 pt-2 border-r">
+      <div
+        className="px-2 pt-2 border-r relative"
+        style={{ width: `${editorWidth}%` }}
+      >
         <textarea
           className="w-full h-full resize-none font-roboto-mono focus:outline-none overflow-auto whitespace-normal break-words 
                     text-dark-text dark:text-light-text 
@@ -84,9 +92,17 @@ function Editor({ className }: EditorProps) {
           placeholder={PLACEHOLDER_MSG}
           wrap="off"
         />
+
+        <div
+          className="absolute top-0 right-0 w-3 h-full cursor-col-resize z-10 translate-x-1/2"
+          onMouseDown={startDragging}
+        />
       </div>
 
-      <div className="w-1/2 px-2 pt-2">
+      <div
+        className="px-2 pt-2"
+        style={{ width: `${100 - editorWidth}%` }}
+      >
         <div 
           className="w-full h-full prose dark:prose-invert max-w-none select-none overflow-auto"
           ref={previewRef}
