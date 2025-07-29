@@ -8,4 +8,5 @@ A Markdown editor built with React, TypeScript, and TailwindCSS.
 - 👀 Real-time preview  
 - 🔄 Synchronized scrolling between editor and preview  
 - 📂 Drag and drop support for `.md` files  
-- 🌙 Light and dark mode with dynamic styling  
+- 🌙 Light and dark mode with dynamic styling
+- 🔧 Resizable panels
