@@ -7,7 +7,13 @@ import ConfirmModal from './ConfirmModal.tsx'
 import darkModeIcon from '../assets/dark-mode.svg'
 import lightModeIcon from '../assets/light-mode.svg'
 
-function Header() {
+type HeaderProps = {
+  isPreviewMode: boolean
+  setIsPreviewMode: React.Dispatch<React.SetStateAction<boolean>>
+  isMobileView?: boolean
+}
+
+function Header({ isPreviewMode, setIsPreviewMode, isMobileView }: HeaderProps) {
   const [showConfirm, setShowConfirm] = useState(false)
   const [pendingContent, setPendingContent] = useState('')
   const { isDark, toggleDarkMode } = useDarkMode()
@@ -57,7 +63,7 @@ function Header() {
     <div>
       <div className="p-2 flex items-center justify-between">
         <div className="flex">
-          <p className="mr-4">Markdown Editor</p>
+          <p className={`mr-4 ${isMobileView ? 'hidden' : 'block'}`}>Markdown Editor</p>
           <div className="flex gap-4">
             <button
               className="text-gray-500 cursor-pointer"
@@ -74,12 +80,22 @@ function Header() {
           </div>
         </div>
 
-        <img
-          className="h-8 w-8 cursor-pointer"
-          src={isDark ? lightModeIcon : darkModeIcon}
-          alt="Dark mode toggle"
-          onClick={toggleDarkMode}
-        />
+        <div className="flex items-center gap-4">
+          {isMobileView ? (
+            <button
+              className="text-gray-500 cursor-pointer"
+              onClick={() => setIsPreviewMode((prev) => !prev)}
+            >
+              {isPreviewMode ? 'Editor' : 'Preview'}
+            </button>
+          ) : null}
+          <img
+            className="h-8 w-8 cursor-pointer"
+            src={isDark ? lightModeIcon : darkModeIcon}
+            alt="Dark mode toggle"
+            onClick={toggleDarkMode}
+          />
+        </div>
       </div>
 
       <hr />

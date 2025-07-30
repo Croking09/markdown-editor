@@ -1,3 +1,4 @@
+
 import { useState, useRef, useCallback } from 'react'
 import Markdown from 'react-markdown'
 
@@ -9,9 +10,11 @@ import { PLACEHOLDER_MSG } from '../constants'
 
 type EditorProps = {
   className?: string
+  isPreviewMode: boolean
+  isMobileView?: boolean
 }
 
-function Editor({ className }: EditorProps) {
+function Editor({ className, isPreviewMode, isMobileView }: EditorProps) {
   const {text, setText} = useText()
 
   const [showConfirm, setShowConfirm] = useState(false)
@@ -75,8 +78,8 @@ function Editor({ className }: EditorProps) {
       onDragOver={handleDragOver}
     >
       <div
-        className="px-2 pt-2 border-r relative"
-        style={{ width: `${editorWidth}%` }}
+        className={`px-2 pt-2 sm:border-r relative ${isPreviewMode ? 'hidden' : 'block'} sm:block`}
+        style={{ width: isMobileView ? '100%' : `${editorWidth}%` }}
       >
         <textarea
           className="w-full h-full resize-none font-roboto-mono focus:outline-none overflow-auto whitespace-normal break-words 
@@ -100,8 +103,8 @@ function Editor({ className }: EditorProps) {
       </div>
 
       <div
-        className="px-2 pt-2"
-        style={{ width: `${100 - editorWidth}%` }}
+        className={`px-2 pt-2 ${isPreviewMode ? 'block' : 'hidden'} sm:block`}
+        style={{ width: isMobileView ? '100%' : `${100 - editorWidth}%` }}
       >
         <div 
           className="w-full h-full prose dark:prose-invert max-w-none select-none overflow-auto"
