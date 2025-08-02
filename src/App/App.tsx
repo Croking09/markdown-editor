@@ -18,7 +18,7 @@ function App() {
   }, [])
 
   return (
-    <div className="min-h-screen flex flex-col font-inter bg-light-bg text-dark-text dark:bg-dark-bg dark:text-light-text transition-colors duration-300">
+    <div className="safe-container min-h-screen flex flex-col font-inter bg-light-bg text-dark-text dark:bg-dark-bg dark:text-light-text transition-colors duration-300">
       <Header isPreviewMode={isPreviewMode} setIsPreviewMode={setIsPreviewMode} isMobileView={isMobileView} />
       <Editor className="flex-grow h-[1px]" isPreviewMode={isPreviewMode} isMobileView={isMobileView} />
       <Footer />

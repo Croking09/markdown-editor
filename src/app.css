@@ -18,3 +18,7 @@
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+.safe-container {
+  padding-bottom: env(safe-area-inset-bottom);
+}
