@@ -97,7 +97,7 @@ function Editor({ className, isPreviewMode, isMobileView }: EditorProps) {
         />
 
         <div
-          className="absolute top-0 right-0 w-3 h-full cursor-col-resize z-10 translate-x-1/2"
+          className="hidden sm:block absolute top-0 right-0 w-3 h-full cursor-col-resize z-10 translate-x-1/2"
           onMouseDown={startDragging}
         />
       </div>
