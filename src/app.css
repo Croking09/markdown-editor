@@ -20,7 +20,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 .colors {
-  @apply bg-light-bg text-dark-text dark:bg-dark-bg dark:text-light-text placeholder-placeholder transition-colors duration-300;
+  @apply bg-light-bg text-dark-text dark:bg-dark-bg dark:text-light-text transition-colors duration-300;
 }
 
 .safe-container {

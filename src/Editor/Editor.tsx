@@ -76,7 +76,7 @@ function Editor({ className, isPreviewMode, isMobileView }: EditorProps) {
   };
 
   return (
-    <div
+    <main
       id="editor-container"
       className={"flex w-full " + (className || "")}
       onDrop={handleDrop}
@@ -114,7 +114,7 @@ function Editor({ className, isPreviewMode, isMobileView }: EditorProps) {
           setShowConfirm(false);
         }}
       />
-    </div>
+    </main>
   );
 }
 

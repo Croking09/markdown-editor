@@ -34,7 +34,7 @@ function WritingPanel({
       style={{ width: isMobileView ? "100%" : `${editorWidth}%` }}
     >
       <textarea
-        className="w-full h-full resize-none font-roboto-mono focus:outline-none overflow-auto whitespace-normal break-words colors"
+        className="w-full h-full resize-none font-roboto-mono focus:outline-none overflow-auto whitespace-normal break-words colors placeholder-placeholder"
         ref={textareaRef}
         id="input"
         value={text}
