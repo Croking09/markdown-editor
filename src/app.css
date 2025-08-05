@@ -1,12 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --font-roboto-mono: 'Roboto Mono', monospace;
-  --font-inter: 'Inter', sans-serif;
+  --font-roboto-mono: "Roboto Mono", monospace;
+  --font-inter: "Inter", sans-serif;
 
   --color-light-bg: #f9f9f7;
   --color-light-text: #f4f4f5;
@@ -19,6 +19,35 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+.colors {
+  @apply bg-light-bg text-dark-text dark:bg-dark-bg dark:text-light-text placeholder-placeholder transition-colors duration-300;
+}
+
 .safe-container {
   padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* WebKit (Chrome, Safari, Edge) */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #9f9fa9;
+  border-radius: 6px;
+  border: 2px solid transparent;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #9f9fa9 transparent;
 }
